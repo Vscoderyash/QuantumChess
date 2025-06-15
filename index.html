@@ -4,13 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuantumChess | By Yash Raj</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap">
     <style>
         :root {
             --quantum-primary: #6e00ff;
@@ -165,80 +159,20 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Play Now Button */
-        .play-now-btn {
-            padding: 1.2rem 3rem;
-            font-size: 1.3rem;
-            background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-accent));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 0 20px rgba(110, 0, 255, 0.5);
-            margin-top: 2rem;
-        }
-
-        .play-now-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.8);
-        }
-
-        .play-now-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--quantum-accent), var(--quantum-primary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .play-now-btn:hover::before {
-            opacity: 1;
-        }
-
-        /* Auth Modal (Same as previous implementation) */
-        .auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .auth-container {
-            background: rgba(26, 26, 46, 0.95);
-            padding: 2.5rem;
-            border-radius: 15px;
+        /* Quantum Board Preview */
+        .board-preview {
             width: 400px;
-            border: 1px solid var(--quantum-primary);
-            box-shadow: var(--neon-glow);
+            height: 400px;
+            background: rgba(20, 20, 30, 0.7);
+            border: 2px solid rgba(110, 0, 255, 0.3);
+            border-radius: 8px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 30px rgba(110, 0, 255, 0.3);
+            margin: 3rem 0;
         }
-        
-        .auth-container::before {
+
+        .board-preview::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -252,194 +186,183 @@
                 transparent 55%
             );
             animation: rotate 20s linear infinite;
-            z-index: -1;
         }
-        
+
         @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .auth-tab {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            position: relative;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease;
-        }
-        
-        .auth-tab.active {
-            color: white;
-        }
-        
-        .auth-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
-        }
-        
-        .auth-form {
-            display: none;
-        }
-        
-        .auth-form.active {
-            display: block;
-            animation: slideUp 0.5s ease;
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-        
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: var(--quantum-primary);
-            box-shadow: 0 0 0 2px rgba(110, 0, 255, 0.3);
-        }
-        
-        button {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 8px;
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2rem;
             border: none;
-            font-weight: 600;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
+
         .btn-primary {
             background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-accent));
             color: white;
-            margin-top: 1rem;
+            box-shadow: 0 0 15px rgba(110, 0, 255, 0.5);
         }
-        
+
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(110, 0, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(110, 0, 255, 0.8);
         }
-        
-        .btn-google {
-            background: #4285F4;
-            color: white;
-            margin-top: 1rem;
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--quantum-accent), var(--quantum-primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
         }
-        
-        .btn-google:hover {
-            background: #3367D6;
+
+        .btn-primary:hover::before {
+            opacity: 1;
         }
-        
+
         .btn-secondary {
             background: transparent;
             color: var(--quantum-secondary);
-            border: 1px solid var(--quantum-secondary);
-            margin-top: 0.5rem;
+            border: 2px solid var(--quantum-secondary);
         }
-        
+
         .btn-secondary:hover {
             background: rgba(0, 247, 255, 0.1);
         }
-        
-        .close-modal {
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(20, 20, 30, 0.5);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(110, 0, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.2);
+        }
+
+        .feature-card::before {
+            content: '';
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
         }
-        
-        .close-modal:hover {
-            color: var(--quantum-accent);
-            transform: rotate(90deg);
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        
-        .auth-footer {
-            margin-top: 1.5rem;
-            text-align: center;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .auth-footer a {
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
             color: var(--quantum-secondary);
-            text-decoration: none;
         }
-        
-        .auth-footer a:hover {
-            text-decoration: underline;
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 20, 0.8);
+            padding: 3rem 5%;
+            text-align: center;
+            margin-top: 5rem;
+            position: relative;
         }
-        
-        .error-message {
-            color: #ff4444;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--quantum-primary), transparent);
         }
-        
-        .success-message {
-            color: #00C851;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        
-        .remember-me {
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            margin: 1rem 0;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--quantum-primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.9rem;
         }
-        
-        .remember-me input {
-            width: auto;
-            margin-right: 0.5rem;
+
+        /* Quantum Effects */
+        .quantum-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        
-        /* Responsive */
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -453,11 +376,26 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-            
-            .auth-container {
-                width: 90%;
+
+            .board-preview {
+                width: 300px;
+                height: 300px;
             }
         }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -470,6 +408,7 @@
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
+                <li><a href="#">Play</a></li>
                 <li><a href="#">Features</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Contact</a></li>
@@ -479,118 +418,46 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Experience Chess in a <span class="quantum-glow">Quantum Dimension</span></h1>
-        <p>Where pieces exist in superposition and every move collapses reality. The future of chess is here.</p>
-        
-        <!-- Play Now Button -->
-        <button id="playNowBtn" class="play-now-btn">
-            <i class="fas fa-chess-queen"></i> Play Now
-        </button>
+        <h1 class="fade-in">Experience Chess in a <span class="quantum-glow">Quantum Dimension</span></h1>
+        <p class="fade-in delay-1">Where pieces exist in superposition and every move collapses reality. The future of chess is here.</p>
+        <div class="board-preview fade-in delay-2"></div>
+        <div class="hero-buttons fade-in delay-3">
+            <a href="auth.html"><button class="btn btn-primary">Play Now</button></a>
+            <button class="btn btn-secondary">Learn Quantum Rules</button>
+        </div>
     </section>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="auth-modal">
-        <div class="auth-container">
-            <span class="close-modal" id="closeModal">&times;</span>
-            
-            <div class="auth-tabs">
-                <div class="auth-tab active" id="signInTab">Sign In</div>
-                <div class="auth-tab" id="signUpTab">Sign Up</div>
-            </div>
-            
-            <!-- Sign In Form -->
-            <div id="signInForm" class="auth-form active">
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="signInEmail" placeholder="Email" required>
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signInPassword" placeholder="Password" required>
-                </div>
-                
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe">
-                    <label for="rememberMe">Remember me</label>
-                </div>
-                
-                <p id="signInError" class="error-message"></p>
-                <p id="signInSuccess" class="success-message"></p>
-                
-                <button id="signInBtn" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Sign In
-                </button>
-                
-                <button id="googleSignIn" class="btn-google">
-                    <i class="fab fa-google"></i> Sign In with Google
-                </button>
-                
-                <button id="forgotPasswordBtn" class="btn-secondary">
-                    Forgot Password?
-                </button>
-                
-                <div class="auth-footer">
-                    New to QuantumChess? <a href="#" id="switchToSignUp">Create account</a>
-                </div>
-            </div>
-            
-            <!-- Sign Up Form -->
-            <div id="signUpForm" class="auth-form">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="signUpName" placeholder="Full Name" required>
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="signUpEmail" placeholder="Email" required>
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signUpPassword" placeholder="Password (min 6 chars)" required>
-                </div>
-                
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signUpPasswordConfirm" placeholder="Confirm Password" required>
-                </div>
-                
-                <p id="signUpError" class="error-message"></p>
-                <p id="signUpSuccess" class="success-message"></p>
-                
-                <button id="signUpBtn" class="btn-primary">
-                    <i class="fas fa-user-plus"></i> Sign Up
-                </button>
-                
-                <div class="auth-footer">
-                    Already have an account? <a href="#" id="switchToSignIn">Sign in</a>
-                </div>
-            </div>
-            
-            <!-- Forgot Password Form -->
-            <div id="forgotPasswordForm" class="auth-form">
-                <h3 style="text-align: center; margin-bottom: 1.5rem;">Reset Password</h3>
-                
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="forgotPasswordEmail" placeholder="Your Email" required>
-                </div>
-                
-                <p id="forgotPasswordError" class="error-message"></p>
-                <p id="forgotPasswordSuccess" class="success-message"></p>
-                
-                <button id="sendResetBtn" class="btn-primary">
-                    <i class="fas fa-paper-plane"></i> Send Reset Link
-                </button>
-                
-                <button id="backToSignIn" class="btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Back to Sign In
-                </button>
-            </div>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="feature-card fade-in">
+            <div class="feature-icon">⚛️</div>
+            <h3>Quantum Superposition</h3>
+            <p>Pieces can exist in multiple states until observed. Experience true quantum mechanics in chess.</p>
         </div>
-    </div>
+        <div class="feature-card fade-in delay-1">
+            <div class="feature-icon">🌀</div>
+            <h3>Entanglement Moves</h3>
+            <p>Link pieces together in quantum entanglement for strategic possibilities never seen before.</p>
+        </div>
+        <div class="feature-card fade-in delay-2">
+            <div class="feature-icon">⏳</div>
+            <h3>Time Fold</h3>
+            <p>Reverse a move once per game with our exclusive 2025 time manipulation feature.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">QuantumChess</div>
+        <p>The most beautiful chess experience in the world</p>
+        <div class="social-links">
+            <a href="#" class="social-link">📱</a>
+            <a href="#" class="social-link">📘</a>
+            <a href="#" class="social-link">🐦</a>
+            <a href="#" class="social-link">📸</a>
+        </div>
+        <p class="copyright">© 2025 QuantumChess | Created by Yash Raj, India</p>
+    </footer>
 
     <script>
         // Create quantum particles
@@ -622,249 +489,6 @@
             
             particlesContainer.appendChild(particle);
         }
-
-        // Firebase Config (Replace with your actual config)
-        const firebaseConfig = {
-            apiKey: "AIzaSyA2nwLZ4w8TQZXrHNEZ_vCtRxUiuPoM7B",
-            authDomain: "quantumchess-3eb16.firebaseapp.com",
-            projectId: "quantumchess-3eb16"
-        };
-        firebase.initializeApp(firebaseConfig);
-        
-        // Persistence setting (remember me)
-        const auth = firebase.auth();
-        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-        // DOM Elements
-        const playNowBtn = document.getElementById('playNowBtn');
-        const authModal = document.getElementById('authModal');
-        const closeModal = document.getElementById('closeModal');
-        const signInTab = document.getElementById('signInTab');
-        const signUpTab = document.getElementById('signUpTab');
-        const signInForm = document.getElementById('signInForm');
-        const signUpForm = document.getElementById('signUpForm');
-        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-        const switchToSignUp = document.getElementById('switchToSignUp');
-        const switchToSignIn = document.getElementById('switchToSignIn');
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-        const backToSignIn = document.getElementById('backToSignIn');
-        const rememberMe = document.getElementById('rememberMe');
-
-        // Tab Switching
-        function showForm(form) {
-            signInForm.classList.remove('active');
-            signUpForm.classList.remove('active');
-            forgotPasswordForm.classList.remove('active');
-            form.classList.add('active');
-            
-            // Update tab states
-            signInTab.classList.remove('active');
-            signUpTab.classList.remove('active');
-            
-            // Clear errors
-            document.querySelectorAll('.error-message, .success-message').forEach(el => {
-                el.style.display = 'none';
-            });
-        }
-
-        signInTab.addEventListener('click', () => {
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-
-        signUpTab.addEventListener('click', () => {
-            showForm(signUpForm);
-            signUpTab.classList.add('active');
-        });
-
-        switchToSignUp.addEventListener('click', (e) => {
-            e.preventDefault();
-            showForm(signUpForm);
-            signUpTab.classList.add('active');
-        });
-
-        switchToSignIn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-
-        forgotPasswordBtn.addEventListener('click', () => {
-            showForm(forgotPasswordForm);
-        });
-
-        backToSignIn.addEventListener('click', () => {
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-
-        // Open Modal
-        playNowBtn.addEventListener('click', () => {
-            authModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-
-        // Close Modal
-        function closeAuthModal() {
-            authModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        closeModal.addEventListener('click', closeAuthModal);
-
-        // Sign Up
-        document.getElementById('signUpBtn').addEventListener('click', () => {
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            const confirmPassword = document.getElementById('signUpPasswordConfirm').value;
-            const name = document.getElementById('signUpName').value;
-            const errorElement = document.getElementById('signUpError');
-            const successElement = document.getElementById('signUpSuccess');
-
-            // Validation
-            if (password !== confirmPassword) {
-                errorElement.textContent = "Passwords don't match!";
-                errorElement.style.display = 'block';
-                return;
-            }
-
-            if (password.length < 6) {
-                errorElement.textContent = "Password must be at least 6 characters";
-                errorElement.style.display = 'block';
-                return;
-            }
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Send verification email
-                    userCredential.user.sendEmailVerification();
-                    
-                    // Update user profile
-                    return userCredential.user.updateProfile({
-                        displayName: name
-                    });
-                })
-                .then(() => {
-                    successElement.textContent = "Verification email sent! Please check your inbox.";
-                    successElement.style.display = 'block';
-                    errorElement.style.display = 'none';
-                    
-                    // Clear form
-                    document.getElementById('signUpForm').reset();
-                    
-                    // Switch to sign in after 3 seconds
-                    setTimeout(() => {
-                        showForm(signInForm);
-                        signInTab.classList.add('active');
-                        successElement.style.display = 'none';
-                    }, 3000);
-                })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
-                    successElement.style.display = 'none';
-                });
-        });
-
-        // Sign In
-        document.getElementById('signInBtn').addEventListener('click', () => {
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            const errorElement = document.getElementById('signInError');
-            const successElement = document.getElementById('signInSuccess');
-
-            // Set persistence based on "Remember me"
-            const persistence = rememberMe.checked ? 
-                firebase.auth.Auth.Persistence.LOCAL : 
-                firebase.auth.Auth.Persistence.SESSION;
-
-            auth.setPersistence(persistence)
-                .then(() => {
-                    return auth.signInWithEmailAndPassword(email, password);
-                })
-                .then((userCredential) => {
-                    if (userCredential.user.emailVerified) {
-                        successElement.textContent = "Sign in successful! Redirecting...";
-                        successElement.style.display = 'block';
-                        errorElement.style.display = 'none';
-                        
-                        // Close modal and redirect
-                        setTimeout(() => {
-                            closeAuthModal();
-                            window.location.href = "/game.html"; // Change to your game page
-                        }, 1000);
-                    } else {
-                        auth.signOut();
-                        errorElement.textContent = 'Please verify your email first. Check your inbox.';
-                        errorElement.style.display = 'block';
-                    }
-                })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
-                    successElement.style.display = 'none';
-                });
-        });
-
-        // Google Sign-In
-        document.getElementById('googleSignIn').addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            
-            // Set persistence based on "Remember me"
-            const persistence = rememberMe.checked ? 
-                firebase.auth.Auth.Persistence.LOCAL : 
-                firebase.auth.Auth.Persistence.SESSION;
-
-            auth.setPersistence(persistence)
-                .then(() => {
-                    return auth.signInWithPopup(provider);
-                })
-                .then(() => {
-                    closeAuthModal();
-                    window.location.href = "/game.html"; // Change to your game page
-                })
-                .catch((error) => {
-                    document.getElementById('signInError').textContent = error.message;
-                    document.getElementById('signInError').style.display = 'block';
-                });
-        });
-
-        // Forgot Password
-        document.getElementById('sendResetBtn').addEventListener('click', () => {
-            const email = document.getElementById('forgotPasswordEmail').value;
-            const errorElement = document.getElementById('forgotPasswordError');
-            const successElement = document.getElementById('forgotPasswordSuccess');
-
-            auth.sendPasswordResetEmail(email)
-                .then(() => {
-                    successElement.textContent = "Password reset email sent! Check your inbox.";
-                    successElement.style.display = 'block';
-                    errorElement.style.display = 'none';
-                })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
-                    successElement.style.display = 'none';
-                });
-        });
-
-        // Close modal when clicking outside
-        window.addEventListener('click', (event) => {
-            if (event.target === authModal) {
-                closeAuthModal();
-            }
-        });
-
-        // Check if user is already logged in
-        auth.onAuthStateChanged((user) => {
-            if (user && user.emailVerified) {
-                // User is signed in and verified
-                playNowBtn.textContent = "Continue Game";
-                playNowBtn.addEventListener('click', () => {
-                    window.location.href = "/game.html";
-                });
-            }
-        });
 
         // Quantum click effect
         document.addEventListener('click', function(e) {
@@ -902,6 +526,19 @@
             const colors = ['#6e00ff', '#00f7ff', '#ff00f7'];
             return colors[Math.floor(Math.random() * colors.length)];
         }
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
