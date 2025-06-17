@@ -3,100 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuantumChess | Sign In</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Quantum Chess | Authentication</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <style>
         :root {
-            --quantum-purple: #8a2be2;
-            --quantum-blue: #00bfff;
-            --quantum-pink: #ff69b4;
-            --dark-bg: #1a1a2e;
-            --input-bg: #2a2a3a;
-            --text-light: #f8f9fa;
+            --primary: #4CAF50;
+            --primary-dark: #3e8e41;
             --google-blue: #4285F4;
-            --error-red: #ff4444;
-            --success-green: #00C851;
+            --google-blue-dark: #3367D6;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --error: #ff5555;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg), #16213e);
+            background-color: var(--bg-dark);
             color: var(--text-light);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
         }
         
-        .auth-container {
-            width: 380px;
-            padding: 2.5rem;
-            background: rgba(30, 30, 50, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.6s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .auth-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
         
         .auth-tabs {
             display: flex;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-        
-        .auth-tabs::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                var(--quantum-purple), 
-                var(--quantum-blue), 
-                var(--quantum-pink));
-            border-radius: 2px;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .auth-tab {
             flex: 1;
             text-align: center;
-            padding: 0.8rem 0;
+            padding: 16px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease;
-            position: relative;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
         }
         
         .auth-tab.active {
-            color: white;
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
         }
         
-        .auth-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 25%;
-            width: 50%;
-            height: 3px;
-            background: linear-gradient(90deg, 
-                var(--quantum-purple), 
-                var(--quantum-blue));
-            border-radius: 3px 3px 0 0;
-            z-index: 1;
+        .auth-content {
+            padding: 24px;
         }
         
         .auth-form {
@@ -107,329 +78,222 @@
             display: block;
         }
         
-        .input-group {
-            margin-bottom: 1rem;
-            position: relative;
+        .form-group {
+            margin-bottom: 16px;
         }
         
-        input {
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #bbb;
+        }
+        
+        .form-group input {
             width: 100%;
-            padding: 14px 20px;
-            background: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #2d2d2d;
+            color: var(--text-light);
+            font-size: 16px;
         }
         
-        input:focus {
+        .form-group input:focus {
             outline: none;
-            border-color: var(--quantum-blue);
-            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
-        }
-        
-        .error-message {
-            color: var(--error-red);
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            display: none;
+            border-color: var(--primary);
         }
         
         .remember-me {
             display: flex;
             align-items: center;
-            margin: 1.5rem 0;
-            font-size: 0.95rem;
+            margin: 16px 0;
         }
         
         .remember-me input {
-            width: auto;
-            margin-right: 10px;
-            accent-color: var(--quantum-purple);
+            margin-right: 8px;
         }
         
-        button {
+        .btn {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
+            font-size: 16px;
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
         }
         
         .btn-primary {
-            background: linear-gradient(45deg, 
-                var(--quantum-purple), 
-                var(--quantum-pink));
+            background-color: var(--primary);
             color: white;
-            margin-bottom: 1.2rem;
-            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+            background-color: var(--primary-dark);
         }
         
         .btn-google {
-            background: var(--google-blue);
+            background-color: var(--google-blue);
             color: white;
-            margin-bottom: 1.5rem;
         }
         
         .btn-google:hover {
-            background: #3367d6;
+            background-color: var(--google-blue-dark);
         }
         
-        .btn-link {
-            background: none;
-            border: none;
-            color: var(--quantum-blue);
-            text-decoration: underline;
-            padding: 0;
-            margin: 0 0 1.5rem 0;
-            font-size: 0.95rem;
-            cursor: pointer;
+        .google-icon {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
         }
         
-        .auth-footer {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.7);
+        .auth-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            font-size: 14px;
         }
         
-        .auth-footer a {
-            color: var(--quantum-pink);
+        .auth-link {
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
             cursor: pointer;
         }
         
-        /* Floating particles background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        .auth-link:hover {
+            text-decoration: underline;
         }
         
-        .particle {
-            position: absolute;
-            background: linear-gradient(45deg, var(--quantum-purple), var(--quantum-blue));
-            border-radius: 50%;
-            filter: blur(1px);
-            opacity: 0.3;
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100vh) translateX(100px); }
-            100% { transform: translateY(0) translateX(0); }
+        .error-message {
+            color: var(--error);
+            font-size: 14px;
+            margin-bottom: 16px;
+            text-align: center;
+            min-height: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Floating particles background -->
-    <div class="particles" id="particles"></div>
-    
-    <div class="auth-container">
+    <div class="auth-card">
         <div class="auth-tabs">
-            <div class="auth-tab active" id="signInTab">Sign In</div>
-            <div class="auth-tab" id="signUpTab">Sign Up</div>
+            <div class="auth-tab active" onclick="showTab('login')">Sign In</div>
+            <div class="auth-tab" onclick="showTab('signup')">Sign Up</div>
         </div>
         
-        <!-- Sign In Form -->
-        <div id="signInForm" class="auth-form active">
-            <div class="input-group">
-                <input type="email" id="signInEmail" placeholder="Email" required>
-            </div>
+        <div class="auth-content">
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <div id="login-error" class="error-message"></div>
+                
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                
+                <div class="remember-me">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button type="button" class="btn btn-google" onclick="signInWithGoogle()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon">
+                    Sign In with Google
+                </button>
+                
+                <div class="auth-links">
+                    <span class="auth-link" onclick="forgotPassword()">Forgot Password?</span>
+                    <span class="auth-link" onclick="showTab('signup')">New to QuantumChess? Create account</span>
+                </div>
+            </form>
             
-            <div class="input-group">
-                <input type="password" id="signInPassword" placeholder="Password" required>
-                <p id="signInError" class="error-message"></p>
-            </div>
-            
-            <div class="remember-me">
-                <input type="checkbox" id="rememberMe">
-                <label for="rememberMe">Remember me</label>
-            </div>
-            
-            <button id="signInBtn" class="btn-primary">
-                <i class="fas fa-sign-in-alt"></i> Sign In
-            </button>
-            
-            <button id="googleSignIn" class="btn-google">
-                <i class="fab fa-google"></i> Sign In with Google
-            </button>
-            
-            <button id="forgotPasswordBtn" class="btn-link">Forgot Password?</button>
-            
-            <div class="auth-footer">
-                New to QuantumChess? <a id="switchToSignUp">Create account</a>
-            </div>
-        </div>
-        
-        <!-- Sign Up Form -->
-        <div id="signUpForm" class="auth-form">
-            <div class="input-group">
-                <input type="email" id="signUpEmail" placeholder="Email" required>
-            </div>
-            
-            <div class="input-group">
-                <input type="password" id="signUpPassword" placeholder="Password" required>
-                <p id="signUpError" class="error-message"></p>
-            </div>
-            
-            <button id="signUpBtn" class="btn-primary">
-                <i class="fas fa-user-plus"></i> Sign Up
-            </button>
-            
-            <div class="auth-footer">
-                Already have an account? <a id="switchToSignIn">Sign in</a>
-            </div>
-        </div>
-        
-        <!-- Forgot Password Form -->
-        <div id="forgotPasswordForm" class="auth-form">
-            <div class="input-group">
-                <input type="email" id="forgotPasswordEmail" placeholder="Your Email" required>
-                <p id="forgotPasswordError" class="error-message"></p>
-            </div>
-            
-            <button id="sendResetBtn" class="btn-primary">
-                <i class="fas fa-paper-plane"></i> Send Reset Link
-            </button>
-            
-            <button id="backToSignIn" class="btn-link">
-                <i class="fas fa-arrow-left"></i> Back to Sign In
-            </button>
+            <!-- Sign Up Form -->
+            <form id="signup-form" class="auth-form">
+                <div id="signup-error" class="error-message"></div>
+                
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="button" class="btn btn-google" onclick="signInWithGoogle()">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="google-icon">
+                    Sign Up with Google
+                </button>
+                
+                <div class="auth-links">
+                    <span class="auth-link" onclick="showTab('login')">Already have an account? Sign In</span>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // Create floating particles
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 30;
-        
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            // Random properties
-            const size = Math.random() * 10 + 5;
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            const delay = Math.random() * 15;
-            const duration = Math.random() * 10 + 15;
-            
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${posX}vw`;
-            particle.style.top = `${posY}vh`;
-            particle.style.animationDelay = `${delay}s`;
-            particle.style.animationDuration = `${duration}s`;
-            
-            // Random gradient
-            const colors = ['#8a2be2', '#00bfff', '#ff69b4'];
-            const color1 = colors[Math.floor(Math.random() * colors.length)];
-            const color2 = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
-            
-            particlesContainer.appendChild(particle);
-        }
-
-        // Firebase Configuration (Replace with your actual config)
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyA2nwLZ4w8TQZXrHNEZ_vCtRxUiuPoM7B",
-            authDomain: "quantumchess-3eb16.firebaseapp.com",
-            projectId: "quantumchess-3eb16"
+            apiKey: "AIzaSyCvLMR5tKfl8q4L9tpsZubjYEskCwb9uZ0",
+            authDomain: "quantumchess-001.firebaseapp.com",
+            projectId: "quantumchess-001",
+            storageBucket: "quantumchess-001.appspot.com",
+            messagingSenderId: "757404463540",
+            appId: "1:757404463540:web:e95f4f79656ad889bf42e1",
+            measurementId: "G-6M5YWZBP1N"
         };
-        
+
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
-        
-        // DOM Elements
-        const signInTab = document.getElementById('signInTab');
-        const signUpTab = document.getElementById('signUpTab');
-        const signInForm = document.getElementById('signInForm');
-        const signUpForm = document.getElementById('signUpForm');
-        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
-        const switchToSignUp = document.getElementById('switchToSignUp');
-        const switchToSignIn = document.getElementById('switchToSignIn');
-        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
-        const backToSignIn = document.getElementById('backToSignIn');
-        const rememberMe = document.getElementById('rememberMe');
-        
-        // Tab Switching
-        function showForm(form) {
-            signInForm.classList.remove('active');
-            signUpForm.classList.remove('active');
-            forgotPasswordForm.classList.remove('active');
-            form.classList.add('active');
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        // Tab switching
+        function showTab(tabName) {
+            // Update active tab
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.auth-tab[onclick="showTab('${tabName}')"]`).classList.add('active');
             
-            signInTab.classList.remove('active');
-            signUpTab.classList.remove('active');
+            // Update active form
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-form`).classList.add('active');
             
             // Clear errors
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.style.display = 'none';
-            });
+            document.getElementById(`${tabName}-error`).textContent = '';
         }
-        
-        signInTab.addEventListener('click', () => {
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-        
-        signUpTab.addEventListener('click', () => {
-            showForm(signUpForm);
-            signUpTab.classList.add('active');
-        });
-        
-        switchToSignUp.addEventListener('click', (e) => {
+
+        // Login with email/password
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            showForm(signUpForm);
-            signUpTab.classList.add('active');
-        });
-        
-        switchToSignIn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-        
-        forgotPasswordBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showForm(forgotPasswordForm);
-        });
-        
-        backToSignIn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showForm(signInForm);
-            signInTab.classList.add('active');
-        });
-        
-        // Sign In
-        document.getElementById('signInBtn').addEventListener('click', () => {
-            const email = document.getElementById('signInEmail').value;
-            const password = document.getElementById('signInPassword').value;
-            const errorElement = document.getElementById('signInError');
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
             
-            // Set persistence based on "Remember me"
-            const persistence = rememberMe.checked ? 
+            // Set persistence
+            const persistence = rememberMe ? 
                 firebase.auth.Auth.Persistence.LOCAL : 
                 firebase.auth.Auth.Persistence.SESSION;
             
@@ -438,80 +302,70 @@
                     return auth.signInWithEmailAndPassword(email, password);
                 })
                 .then(() => {
-                    // Redirect to game page after successful login
-                    window.location.href = "game.html";
+                    // Redirect to game page
+                    window.location.href = 'game.html';
                 })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
+                .catch(error => {
+                    document.getElementById('login-error').textContent = error.message;
                 });
         });
-        
-        // Google Sign-In
-        document.getElementById('googleSignIn').addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
+
+        // Sign up with email/password
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
             
-            // Set persistence based on "Remember me"
-            const persistence = rememberMe.checked ? 
-                firebase.auth.Auth.Persistence.LOCAL : 
-                firebase.auth.Auth.Persistence.SESSION;
-            
-            auth.setPersistence(persistence)
-                .then(() => {
-                    return auth.signInWithPopup(provider);
-                })
-                .then(() => {
-                    window.location.href = "game.html";
-                })
-                .catch((error) => {
-                    document.getElementById('signInError').textContent = error.message;
-                    document.getElementById('signInError').style.display = 'block';
-                });
-        });
-        
-        // Sign Up
-        document.getElementById('signUpBtn').addEventListener('click', () => {
-            const email = document.getElementById('signUpEmail').value;
-            const password = document.getElementById('signUpPassword').value;
-            const errorElement = document.getElementById('signUpError');
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                document.getElementById('signup-error').textContent = 'Passwords do not match';
+                return;
+            }
             
             auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Send verification email
-                    return userCredential.user.sendEmailVerification();
-                })
                 .then(() => {
-                    alert('Verification email sent! Please check your inbox.');
-                    showForm(signInForm);
-                    signInTab.classList.add('active');
+                    // Redirect to game page
+                    window.location.href = 'game.html';
                 })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
+                .catch(error => {
+                    document.getElementById('signup-error').textContent = error.message;
                 });
         });
-        
-        // Forgot Password
-        document.getElementById('sendResetBtn').addEventListener('click', () => {
-            const email = document.getElementById('forgotPasswordEmail').value;
-            const errorElement = document.getElementById('forgotPasswordError');
+
+        // Google authentication
+        function signInWithGoogle() {
+            auth.signInWithPopup(provider)
+                .then(() => {
+                    window.location.href = 'game.html';
+                })
+                .catch(error => {
+                    const activeTab = document.querySelector('.auth-tab.active').getAttribute('onclick').replace("showTab('", "").replace("')", "");
+                    document.getElementById(`${activeTab}-error`).textContent = error.message;
+                });
+        }
+
+        // Forgot password
+        function forgotPassword() {
+            const email = document.getElementById('login-email').value;
+            if (!email) {
+                document.getElementById('login-error').textContent = 'Please enter your email first';
+                return;
+            }
             
             auth.sendPasswordResetEmail(email)
                 .then(() => {
-                    alert('Password reset email sent! Check your inbox.');
-                    showForm(signInForm);
-                    signInTab.classList.add('active');
+                    alert('Password reset email sent! Please check your inbox.');
                 })
-                .catch((error) => {
-                    errorElement.textContent = error.message;
-                    errorElement.style.display = 'block';
+                .catch(error => {
+                    document.getElementById('login-error').textContent = error.message;
                 });
-        });
-        
+        }
+
         // Check if user is already logged in
         auth.onAuthStateChanged((user) => {
             if (user) {
-                window.location.href = "game.html";
+                window.location.href = 'game.html';
             }
         });
     </script>
