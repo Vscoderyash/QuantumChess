@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="quantum-singularity">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuantumChess | By Yash Raj</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;400;600&display=swap">
+    <!-- SEO Meta Tags -->
+    <title>Quantum Chess | Where Chess Meets Quantum Physics</title>
+    <meta name="description" content="Experience the revolutionary fusion of quantum mechanics and chess strategy. Play both classical and quantum chess modes in this groundbreaking interface.">
+    <meta name="keywords" content="quantum chess, chess innovation, quantum gaming, superposition chess, quantum physics game">
+    <meta name="author" content="Yash Raj">
+    <meta property="og:title" content="Quantum Chess | Where Chess Meets Quantum Physics">
+    <meta property="og:description" content="The future of chess is here - play with quantum mechanics principles">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantumchess.example.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* === QUANTUM DESIGN SYSTEM 4.0 === */
         :root {
-            --quantum-primary: #6e00ff;
-            --quantum-secondary: #00f7ff;
-            --quantum-accent: #ff00f7;
-            --dark-void: #0a0a0a;
-            --neon-glow: 0 0 10px var(--quantum-primary), 
-                         0 0 20px var(--quantum-secondary),
-                         0 0 30px rgba(255, 0, 247, 0.3);
+            --quantum-void: hsl(230, 35%, 7%);
+            --quantum-abyss: hsl(230, 30%, 10%);
+            --quantum-horizon: hsl(230, 25%, 15%);
+            --quantum-edge: hsl(230, 15%, 25%);
+            --quantum-glow: hsl(210, 100%, 65%);
+            --quantum-pulse: hsl(280, 100%, 70%);
+            --quantum-spark: hsl(170, 100%, 65%);
+            --classic-gold: hsl(45, 100%, 60%);
+            --classic-marble: hsl(30, 20%, 50%);
+            --quantum-text: hsl(0, 0%, 98%);
+            --quantum-dim: hsl(0, 0%, 75%);
+            --quantum-transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --quantum-bezier: cubic-bezier(0.68, -0.6, 0.32, 1.6);
         }
 
         * {
@@ -23,521 +38,1210 @@
         }
 
         body {
-            background-color: var(--dark-void);
-            color: white;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--quantum-void);
+            color: var(--quantum-text);
+            line-height: 1.7;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(110, 0, 255, 0.1) 0%, transparent 25%),
-                radial-gradient(circle at 80% 70%, rgba(0, 247, 255, 0.1) 0%, transparent 25%);
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 30%, hsla(210, 100%, 60%, 0.03) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, hsla(280, 100%, 60%, 0.03) 0%, transparent 25%);
+            position: relative;
         }
 
-        /* Quantum Particle Background */
-        .quantum-particles {
+        /* Quantum Logo Background */
+        body::before {
+            content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vmin;
+            height: 80vmin;
+            background-image: url('https://chatgpt.com/s/m_6853f60a62d08191b7e9194d171696ff');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.03;
             z-index: -1;
-            overflow: hidden;
+            pointer-events: none;
+            animation: quantum-float 15s ease-in-out infinite alternate;
         }
 
-        .particle {
-            position: absolute;
-            background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-accent));
-            border-radius: 50%;
-            filter: blur(1px);
-            opacity: 0.7;
-            animation: float 15s infinite linear;
+        @font-face {
+            font-family: 'Inter';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100vh) translateX(100px); }
-            100% { transform: translateY(0) translateX(0); }
-        }
-
-        /* Header Styles */
-        header {
-            padding: 2rem 5%;
+        /* === QUANTUM HEADER === */
+        .quantum-header {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 10;
+            z-index: 1000;
+            background: rgba(10, 12, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--quantum-edge);
         }
 
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .quantum-logo {
+            width: 3.2rem;
+            height: 3.2rem;
+            position: relative;
+        }
+
+        .logo-core {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--quantum-abyss);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 0 25px rgba(104, 160, 255, 0.15);
+            border: 1px solid var(--quantum-edge);
+        }
+
+        .logo-core::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: conic-gradient(
+                transparent,
+                var(--quantum-glow),
+                var(--quantum-pulse),
+                transparent
+            );
+            animation: quantum-spin 8s linear infinite;
+        }
+
+        .logo-core::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--quantum-abyss);
+            border-radius: 50%;
+        }
+
+        .logo-icon {
+            position: relative;
+            z-index: 2;
+            color: var(--quantum-spark);
+            font-size: 1.6rem;
+            animation: quantum-pulse 4s ease-in-out infinite alternate;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-spark));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: var(--neon-glow);
-            position: relative;
-        }
-
-        .logo::after {
-            content: 'By Yash Raj | India 2025';
-            position: absolute;
-            bottom: -1.5rem;
-            left: 0;
-            font-size: 0.8rem;
-            font-family: 'Montserrat', sans-serif;
-            color: rgba(255, 255, 255, 0.7);
-            width: 100%;
+            letter-spacing: -0.5px;
         }
 
         /* Navigation */
-        nav ul {
+        .nav-links {
             display: flex;
-            gap: 2rem;
-            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
+        .nav-link {
             position: relative;
+            color: var(--quantum-dim);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: var(--quantum-transition);
             padding: 0.5rem 0;
-            transition: all 0.3s ease;
         }
 
-        nav a::after {
+        .nav-link:hover {
+            color: var(--quantum-text);
+        }
+
+        .nav-link::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-secondary));
-            transition: width 0.3s ease;
+            background: var(--quantum-spark);
+            transition: var(--quantum-transition);
         }
 
-        nav a:hover {
-            color: var(--quantum-secondary);
-        }
-
-        nav a:hover::after {
+        .nav-link:hover::after {
             width: 100%;
         }
 
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-left: 2rem;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--quantum-horizon);
+            color: var(--quantum-dim);
+            transition: var(--quantum-transition);
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .social-link.youtube:hover {
+            background: #FF0000;
+            color: white;
+        }
+
+        .social-link.twitter:hover {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .social-link.instagram:hover {
+            background: #E1306C;
+            color: white;
+        }
+
+        .social-link.discord:hover {
+            background: #5865F2;
+            color: white;
+        }
+
+        /* === MAIN CONTENT === */
+        .quantum-main {
+            padding: 10rem 5% 5rem;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
         /* Hero Section */
-        .hero {
+        .quantum-hero {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 70vh;
-            padding: 0 5%;
             text-align: center;
-            position: relative;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 2rem;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-secondary));
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            margin-bottom: 1.8rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--quantum-text), var(--quantum-spark));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: var(--neon-glow);
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin-bottom: 3rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Quantum Board Preview */
-        .board-preview {
-            width: 400px;
-            height: 400px;
-            background: rgba(20, 20, 30, 0.7);
-            border: 2px solid rgba(110, 0, 255, 0.3);
-            border-radius: 8px;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(110, 0, 255, 0.3);
-            margin: 3rem 0;
+            letter-spacing: -1.5px;
         }
 
-        .board-preview::before {
+        .hero-title::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent 45%,
-                rgba(110, 0, 255, 0.1) 50%,
-                transparent 55%
-            );
-            animation: rotate 20s linear infinite;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: var(--quantum-spark);
+            border-radius: 2px;
+            filter: blur(3px);
+            opacity: 0.8;
         }
 
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .hero-subtitle {
+            font-size: 1.4rem;
+            max-width: 750px;
+            margin: 0 auto 4rem;
+            color: var(--quantum-dim);
+            font-weight: 400;
         }
 
-        /* Buttons */
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* Game Portal */
+        .game-portal {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            max-width: 1400px;
+            perspective: 2000px;
+        }
+
+        /* Classic Chess Portal */
+        .classic-portal {
             position: relative;
+            width: 380px;
+            height: 480px;
+            background: var(--quantum-horizon);
+            border-radius: 24px;
             overflow: hidden;
-            z-index: 1;
+            border: 1px solid var(--classic-marble);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: var(--quantum-transition);
+            transform-style: preserve-3d;
+            cursor: pointer;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-accent));
-            color: white;
-            box-shadow: 0 0 15px rgba(110, 0, 255, 0.5);
+        .classic-portal:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+            border-color: var(--classic-gold);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(110, 0, 255, 0.8);
-        }
-
-        .btn-primary::before {
+        .classic-portal::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, var(--quantum-accent), var(--quantum-primary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
+            background: 
+                linear-gradient(45deg, transparent 48%, var(--classic-gold) 49%, var(--classic-gold) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, var(--classic-gold) 49%, var(--classic-gold) 51%, transparent 52%);
+            background-size: 30px 30px;
+            opacity: 0.08;
+            animation: chessMove 6s linear infinite;
         }
 
-        .btn-primary:hover::before {
-            opacity: 1;
+        .classic-portal::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(30, 20, 10, 0.2) 0%,
+                transparent 50%,
+                rgba(30, 20, 10, 0.1) 100%
+            );
+            pointer-events: none;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: var(--quantum-secondary);
-            border: 2px solid var(--quantum-secondary);
+        .classic-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            text-align: center;
         }
 
-        .btn-secondary:hover {
-            background: rgba(0, 247, 255, 0.1);
+        .classic-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            color: var(--classic-gold);
+            text-shadow: 0 0 20px hsla(45, 100%, 60%, 0.3);
+            animation: pulse 3s ease-in-out infinite alternate;
+        }
+
+        .classic-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--classic-gold);
+            letter-spacing: -0.5px;
+        }
+
+        .classic-desc {
+            font-size: 1.1rem;
+            color: var(--quantum-dim);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .portal-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--classic-gold), hsl(35, 100%, 50%));
+            color: hsl(30, 40%, 15%);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--quantum-transition);
+            box-shadow: 0 5px 25px hsla(45, 100%, 50%, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .portal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.6s;
+        }
+
+        .portal-btn:hover::before {
+            left: 100%;
+        }
+
+        .portal-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px hsla(45, 100%, 50%, 0.5);
+        }
+
+        /* Quantum Chess Portal */
+        .quantum-portal {
+            position: relative;
+            width: 380px;
+            height: 480px;
+            background: var(--quantum-horizon);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--quantum-edge);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            transition: var(--quantum-transition);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .quantum-portal:hover {
+            transform: translateY(-20px) rotateX(5deg);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+            border-color: var(--quantum-spark);
+        }
+
+        .quantum-portal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent,
+                var(--quantum-glow),
+                var(--quantum-pulse),
+                transparent
+            );
+            animation: spin 8s linear infinite;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .quantum-portal::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--quantum-horizon);
+            border-radius: 22px;
+            z-index: 2;
+        }
+
+        .quantum-content {
+            position: relative;
+            z-index: 3;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .quantum-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-spark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: quantum-float 5s ease-in-out infinite;
+        }
+
+        .quantum-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-spark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .quantum-desc {
+            font-size: 1.1rem;
+            color: var(--quantum-dim);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .quantum-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-pulse));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--quantum-transition);
+            box-shadow: 0 5px 25px rgba(104, 160, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 4;
+        }
+
+        .quantum-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.6s;
+        }
+
+        .quantum-btn:hover::before {
+            left: 100%;
+        }
+
+        .quantum-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 35px rgba(104, 160, 255, 0.6);
         }
 
         /* Features Section */
-        .features {
-            padding: 5rem 5%;
+        .quantum-features {
+            padding: 8rem 5%;
+            background: var(--quantum-abyss);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-spark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            color: var(--quantum-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
         }
 
         .feature-card {
-            background: rgba(20, 20, 30, 0.5);
-            border-radius: 10px;
-            padding: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(110, 0, 255, 0.2);
+            background: var(--quantum-horizon);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--quantum-edge);
+            transition: var(--quantum-transition);
             position: relative;
             overflow: hidden;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(110, 0, 255, 0.2);
+            border-color: var(--quantum-spark);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
         .feature-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(104, 160, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: var(--quantum-transition);
+            opacity: 0;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-icon {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, var(--quantum-primary), var(--quantum-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            margin-bottom: 1.8rem;
+            color: var(--quantum-spark);
         }
 
-        .feature-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            margin-bottom: 1rem;
-            color: var(--quantum-secondary);
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--quantum-text);
+        }
+
+        .feature-desc {
+            color: var(--quantum-dim);
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
 
         /* Footer */
-        footer {
-            background: rgba(10, 10, 20, 0.8);
-            padding: 3rem 5%;
-            text-align: center;
-            margin-top: 5rem;
-            position: relative;
+        .quantum-footer {
+            background: hsl(230, 35%, 5%);
+            padding: 6rem 5% 3rem;
+            border-top: 1px solid var(--quantum-edge);
         }
 
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--quantum-primary), transparent);
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+        }
+
+        .footer-column {
+            margin-bottom: 2rem;
         }
 
         .footer-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, var(--quantum-primary), var(--quantum-accent));
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo-icon {
+            width: 2.8rem;
+            height: 2.8rem;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-pulse));
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--quantum-void);
+            font-size: 1.2rem;
+        }
+
+        .footer-logo-text {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--quantum-glow), var(--quantum-spark));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
+        .footer-about {
+            color: var(--quantum-dim);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
 
-        .social-link {
-            width: 40px;
-            height: 40px;
+        .footer-social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social-link {
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            display: grid;
+            place-items: center;
+            background: var(--quantum-horizon);
+            color: var(--quantum-dim);
+            transition: var(--quantum-transition);
+            text-decoration: none;
+            font-size: 1.1rem;
         }
 
-        .social-link:hover {
-            background: var(--quantum-primary);
+        .footer-social-link:hover {
             transform: translateY(-3px);
         }
 
+        .footer-social-link.youtube:hover {
+            background: #FF0000;
+            color: white;
+        }
+
+        .footer-social-link.twitter:hover {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .footer-social-link.instagram:hover {
+            background: #E1306C;
+            color: white;
+        }
+
+        .footer-social-link.discord:hover {
+            background: #5865F2;
+            color: white;
+        }
+
+        .footer-heading {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            color: var(--quantum-text);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link-item {
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--quantum-dim);
+            text-decoration: none;
+            transition: var(--quantum-transition);
+            font-size: 1.1rem;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: var(--quantum-spark);
+            transform: translateX(5px);
+        }
+
         .copyright {
-            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--quantum-edge);
+            color: var(--quantum-dim);
+            font-size: 0.95rem;
+        }
+
+        .creator-credit {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--quantum-dim);
             font-size: 0.9rem;
         }
 
-        /* Quantum Effects */
-        .quantum-effect {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .creator-credit a {
+            color: var(--quantum-spark);
+            text-decoration: none;
+            transition: var(--quantum-transition);
+        }
+
+        .creator-credit a:hover {
+            text-decoration: underline;
+        }
+
+        /* Quantum Particles */
+        .quantum-particle {
+            position: absolute;
+            background: var(--quantum-spark);
+            border-radius: 50%;
             pointer-events: none;
-            z-index: 100;
+            z-index: -1;
+            filter: blur(1px);
             opacity: 0;
-            transition: opacity 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes quantum-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes quantum-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        @keyframes chessMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 30px 30px; }
+        }
+
+        @keyframes particle-float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .game-portal {
+                gap: 3rem;
+            }
+            
+            .classic-portal,
+            .quantum-portal {
+                width: 340px;
+                height: 440px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .social-links {
+                margin-left: 1rem;
+                gap: 0.8rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
-            header {
+            .quantum-header {
                 flex-direction: column;
-                gap: 1rem;
+                padding: 1.5rem;
+                gap: 1.5rem;
             }
-
-            nav ul {
-                gap: 1rem;
+            
+            .logo-container {
+                width: 100%;
+                justify-content: center;
             }
-
-            .hero h1 {
-                font-size: 2.5rem;
+            
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
             }
-
-            .board-preview {
-                width: 300px;
-                height: 300px;
+            
+            .quantum-hero {
+                padding: 2rem 0;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 3rem;
+            }
+            
+            .classic-portal,
+            .quantum-portal {
+                width: 100%;
+                max-width: 400px;
+                height: auto;
+                aspect-ratio: 3/4;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
             }
         }
 
-        /* Animation Classes */
-        .fade-in {
-            animation: fadeIn 1s ease forwards;
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.4rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .feature-card {
+                padding: 2rem;
+            }
+            
+            .footer-social-links {
+                justify-content: center;
+            }
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
     <!-- Quantum Particles Background -->
-    <div class="quantum-particles" id="particles"></div>
+    <div id="quantum-particles"></div>
 
     <!-- Header -->
-    <header>
-        <div class="logo">QuantumChess</div>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Play</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+    <header class="quantum-header">
+        <div class="logo-container">
+            <div class="quantum-logo">
+                <div class="logo-core">
+                    <i class="fas fa-chess-queen logo-icon"></i>
+                </div>
+            </div>
+            <span class="logo-text">Quantum Chess</span>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Classic Chess</a>
+            <a href="#" class="nav-link">Quantum Chess</a>
+            <a href="#" class="nav-link">Learn</a>
+            <a href="#" class="nav-link">Tournaments</a>
+            <a href="#" class="nav-link">About</a>
+            
+            <div class="social-links">
+                <a href="https://youtube.com" class="social-link youtube" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://twitter.com" class="social-link twitter" target="_blank" aria-label="Twitter">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+                <a href="https://instagram.com" class="social-link instagram" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://discord.com" class="social-link discord" target="_blank" aria-label="Discord">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="fade-in">Experience Chess in a <span class="quantum-glow">Quantum Dimension</span></h1>
-        <p class="fade-in delay-1">Where pieces exist in superposition and every move collapses reality. The future of chess is here.</p>
-        <div class="board-preview fade-in delay-2"></div>
-        <div class="hero-buttons fade-in delay-3">
-            <a href="auth.html"><button class="btn btn-primary">Play Now</button></a>
-            <button class="btn btn-secondary">Learn Quantum Rules</button>
-        </div>
-    </section>
+    <!-- Main Content -->
+    <main class="quantum-main">
+        <!-- Hero Section -->
+        <section class="quantum-hero">
+            <h1 class="hero-title">Where Chess Meets Quantum Physics</h1>
+            <p class="hero-subtitle">Experience the revolutionary fusion of centuries-old strategy and cutting-edge quantum mechanics in a game that challenges reality itself</p>
+            
+            <div class="game-portal">
+                <!-- Classic Chess Portal -->
+                <div class="classic-portal" id="classicPortal">
+                    <div class="classic-content">
+                        <i class="fas fa-chess-knight classic-icon"></i>
+                        <h2 class="classic-title">Classic Chess</h2>
+                        <p class="classic-desc">The timeless game of kings, unchanged for centuries but perfected through generations of strategic mastery</p>
+                        <button class="portal-btn">
+                            <i class="fas fa-play"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quantum Chess Portal -->
+                <div class="quantum-portal" id="quantumPortal">
+                    <div class="quantum-content">
+                        <i class="fas fa-atom quantum-icon"></i>
+                        <h2 class="quantum-title">Quantum Chess</h2>
+                        <p class="quantum-desc">Pieces exist in superposition until observed - introducing quantum uncertainty and entanglement to the chessboard</p>
+                        <button class="quantum-btn">
+                            <i class="fas fa-atom"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="feature-card fade-in">
-            <div class="feature-icon">⚛️</div>
-            <h3>Quantum Superposition</h3>
-            <p>Pieces can exist in multiple states until observed. Experience true quantum mechanics in chess.</p>
-        </div>
-        <div class="feature-card fade-in delay-1">
-            <div class="feature-icon">🌀</div>
-            <h3>Entanglement Moves</h3>
-            <p>Link pieces together in quantum entanglement for strategic possibilities never seen before.</p>
-        </div>
-        <div class="feature-card fade-in delay-2">
-            <div class="feature-icon">⏳</div>
-            <h3>Time Fold</h3>
-            <p>Reverse a move once per game with our exclusive 2025 time manipulation feature.</p>
-        </div>
-    </section>
+        <!-- Features Section -->
+        <section class="quantum-features">
+            <div class="features-container">
+                <div class="section-header">
+                    <h2 class="section-title">The Quantum Difference</h2>
+                    <p class="section-subtitle">Discover what makes Quantum Chess the most innovative chess variant of the 21st century</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-quantum"></i>
+                        </div>
+                        <h3 class="feature-title">Superposition</h3>
+                        <p class="feature-desc">Pieces can exist in multiple states simultaneously until their position is observed by an opponent's move, creating new strategic dimensions.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3 class="feature-title">Entanglement</h3>
+                        <p class="feature-desc">Certain moves can create quantum entanglement between pieces, linking their fates across the board in unexpected ways.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="feature-title">New Strategy</h3>
+                        <p class="feature-desc">Master probability-based tactics and quantum uncertainty while still applying classical chess principles.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="feature-title">Learn Physics</h3>
+                        <p class="feature-desc">Grasp real quantum computing concepts through interactive gameplay and visual explanations built into the interface.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="feature-title">Competitive</h3>
+                        <p class="feature-desc">Join ranked matches and tournaments with ELO ratings for both classical and quantum chess modes.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Community</h3>
+                        <p class="feature-desc">Connect with thousands of players exploring the frontiers of quantum gameplay together in our active community.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-logo">QuantumChess</div>
-        <p>The most beautiful chess experience in the world</p>
-        <div class="social-links">
-            <a href="#" class="social-link">📱</a>
-            <a href="#" class="social-link">📘</a>
-            <a href="#" class="social-link">🐦</a>
-            <a href="#" class="social-link">📸</a>
+    <footer class="quantum-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-chess-queen"></i>
+                    </div>
+                    <span class="footer-logo-text">Quantum Chess</span>
+                </div>
+                <p class="footer-about">
+                    The future of chess is here. Quantum Chess blends centuries of tradition with cutting-edge quantum mechanics to create an entirely new strategic experience that challenges both your mind and reality itself.
+                </p>
+                <div class="footer-social-links">
+                    <a href="https://youtube.com" class="footer-social-link youtube" target="_blank" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://twitter.com" class="footer-social-link twitter" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-x-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com" class="footer-social-link instagram" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://discord.com" class="footer-social-link discord" target="_blank" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Game Modes</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">Classic Chess</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Quantum Chess</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Puzzle Mode</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Daily Challenges</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">AI Battles</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Tournaments</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Learn</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">Quantum Mechanics</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Chess Strategy</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Tutorial Videos</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Beginner's Guide</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Advanced Tactics</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Quantum Principles</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-heading">Company</h3>
+                <ul class="footer-links">
+                    <li class="footer-link-item"><a href="#" class="footer-link">About Us</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Careers</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Press</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Contact</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Blog</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Privacy Policy</a></li>
+                </ul>
+            </div>
         </div>
-        <p class="copyright">© 2025 QuantumChess | Created by Yash Raj, India</p>
+        
+        <div class="copyright">
+            © 2025 Quantum Chess. All rights reserved. The future of strategy gaming.
+        </div>
+        
+        <div class="creator-credit">
+            Made with <i class="fas fa-heart" style="color: var(--quantum-spark);"></i> by <a href="#" target="_blank">Yash Raj</a>
+        </div>
     </footer>
 
+    <!-- Quantum Particles Script -->
     <script>
-        // Create quantum particles
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 50;
-
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
+        document.addEventListener('DOMContentLoaded', () => {
+            const particlesContainer = document.getElementById('quantum-particles');
             
-            // Random properties
-            const size = Math.random() * 5 + 2;
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            const delay = Math.random() * 15;
-            const duration = Math.random() * 10 + 10;
-            
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${posX}vw`;
-            particle.style.top = `${posY}vh`;
-            particle.style.animationDelay = `${delay}s`;
-            particle.style.animationDuration = `${duration}s`;
-            
-            // Random color
-            const colors = ['#6e00ff', '#00f7ff', '#ff00f7'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.backgroundColor = color;
-            
-            particlesContainer.appendChild(particle);
-        }
-
-        // Quantum click effect
-        document.addEventListener('click', function(e) {
-            const effect = document.createElement('div');
-            effect.classList.add('quantum-effect');
-            effect.style.left = `${e.clientX}px`;
-            effect.style.top = `${e.clientY}px`;
-            
-            // Create ripple
-            effect.style.width = '0';
-            effect.style.height = '0';
-            effect.style.borderRadius = '50%';
-            effect.style.boxShadow = `0 0 10px 5px ${getRandomColor()}`;
-            effect.style.opacity = '1';
-            
-            document.body.appendChild(effect);
-            
-            // Animate
-            const size = Math.random() * 100 + 50;
-            effect.animate([
-                { width: '0', height: '0', opacity: 1 },
-                { width: `${size}px`, height: `${size}px`, opacity: 0 }
-            ], {
-                duration: 1000,
-                easing: 'cubic-bezier(0, 0.2, 0.8, 1)'
-            });
-            
-            // Remove after animation
-            setTimeout(() => {
-                effect.remove();
-            }, 1000);
-        });
-
-        function getRandomColor() {
-            const colors = ['#6e00ff', '#00f7ff', '#ff00f7'];
-            return colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        // Animate elements on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+            // Create quantum particles
+            function createParticles() {
+                const colors = [
+                    'hsl(210, 100%, 65%)',
+                    'hsl(280, 100%, 70%)',
+                    'hsl(170, 100%, 65%)',
+                    'hsl(45, 100%, 60%)'
+                ];
+                
+                for (let i = 0; i < 150; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('quantum-particle');
+                    
+                    // Random properties
+                    const size = Math.random() * 5 + 1;
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    const duration = Math.random() * 15 + 10;
+                    const delay = Math.random() * 10;
+                    const opacity = Math.random() * 0.5 + 0.1;
+                    
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${x}vw`;
+                    particle.style.top = `${y}vh`;
+                    particle.style.background = color;
+                    particle.style.animation = `particle-float ${duration}s ${delay}s infinite ease-in-out`;
+                    particle.style.opacity = opacity;
+                    
+                    particlesContainer.appendChild(particle);
                 }
+            }
+            
+            // Button hover effects
+            const classicPortal = document.getElementById('classicPortal');
+            const quantumPortal = document.getElementById('quantumPortal');
+            
+            classicPortal.addEventListener('mousemove', (e) => {
+                const rect = classicPortal.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const particle = document.createElement('div');
+                particle.classList.add('quantum-particle');
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.width = '8px';
+                particle.style.height = '8px';
+                particle.style.background = 'hsla(45, 100%, 60%, 0.7)';
+                particle.style.animation = 'none';
+                particle.style.opacity = '0.8';
+                
+                classicPortal.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.style.transition = 'all 1s ease-out';
+                    particle.style.opacity = '0';
+                    particle.style.transform = 'scale(1.5)';
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
+                }, 100);
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
+            
+            quantumPortal.addEventListener('mousemove', (e) => {
+                const rect = quantumPortal.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const particle = document.createElement('div');
+                particle.classList.add('quantum-particle');
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.width = '6px';
+                particle.style.height = '6px';
+                particle.style.background = 'hsla(210, 100%, 65%, 0.7)';
+                particle.style.animation = 'none';
+                particle.style.opacity = '0.8';
+                
+                quantumPortal.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.style.transition = 'all 1.5s ease-out';
+                    particle.style.opacity = '0';
+                    particle.style.transform = 'translate(calc(-50% + 20px), calc(-50% - 20px)) scale(2)';
+                    
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1500);
+                }, 100);
+            });
+            
+            // Initialize
+            createParticles();
         });
     </script>
 </body>
